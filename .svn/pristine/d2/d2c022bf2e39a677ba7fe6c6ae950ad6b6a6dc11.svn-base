@@ -1,0 +1,38 @@
+drop table applications_application_status_update;
+
+drop table additional_field_values ; 
+
+drop table programs_applications; 
+
+drop table student_information_applications; 
+
+drop table application_status_update;
+
+drop table applications;
+
+drop table academic_record;
+
+drop table application_status;
+
+drop table student_information_educational_background;
+
+drop table educational_background; 
+
+drop table app_users CASCADE ;
+
+drop table student_information;
+
+drop table user_role_app_users;
+
+drop table departments_additional_fields;
+
+drop table additional_fields;
+
+drop table departments_programs;
+
+drop table programs;
+
+drop table departments;
+
+drop table user_role;
+ 

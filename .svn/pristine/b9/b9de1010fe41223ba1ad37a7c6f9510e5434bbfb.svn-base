@@ -1,0 +1,36 @@
+package springmvc.model.dao.jpa;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
+import springmvc.model.*;
+import springmvc.model.dao.*;
+
+@Repository
+public class ApplicationDaoImpl implements ApplicationDao{
+
+	@PersistenceContext
+    private EntityManager entityManager;
+	
+	@Override
+	public List<Applications> getApplicationsPerDepartment(String department) {
+		
+		return entityManager.createQuery("select a from Applications a"
+				+ " where a.program = (select p from Programs p where p.department.name='"+department+"')",Applications.class ).getResultList();
+		
+	}
+
+	
+	@Override
+	public List<Applications> getApplicationsForStudent(String studentEmail) {
+		
+		return entityManager.createQuery("select a from Applications a"
+				+ " where a.studentInfomration.email = '"+studentEmail+"')",Applications.class ).getResultList();
+		
+	}
+	
+
+}
