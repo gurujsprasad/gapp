@@ -70,6 +70,7 @@
         end_year timestamp,
         major varchar(255),
         start_year timestamp,
+        studentInfo_id int4,
         primary key (id)
     );
 
@@ -178,6 +179,11 @@
         add constraint FK_tj4flpoahrmgefr9vceft66v 
         foreign key (applications_id) 
         references applications;
+
+    alter table educational_background 
+        add constraint FK_g3jkyldnf9x3y2yr86ku242vi 
+        foreign key (studentInfo_id) 
+        references student_information;
 
     alter table programs 
         add constraint FK_t38cee5jtiwtw07papp2rjlca 

@@ -1,5 +1,6 @@
 package springmvc.web.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.WebServiceContext;
 
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +23,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import springmvc.model.AcademicRecord;
 import springmvc.model.Applications;
 import springmvc.model.Departments;
 import springmvc.model.EducationalBackground;
 import springmvc.model.Programs;
 import springmvc.model.StudentInformation;
 import springmvc.model.Users;
+import springmvc.model.dao.AcademicRecordDao;
 import springmvc.model.dao.ApplicationDao;
 import springmvc.model.dao.DepartmentDao;
+import springmvc.model.dao.EducationalBackgroundDao;
 import springmvc.model.dao.ProgramsDao;
 import springmvc.model.dao.StudentInformationDao;
 import springmvc.model.dao.UserDao;
@@ -51,6 +58,12 @@ public class StudentController {
 	@Autowired
 	UserDao userDoa;
 	
+	@Autowired
+	EducationalBackgroundDao eduDao;
+	
+	@Autowired
+	AcademicRecordDao academicDao;
+	
 	
 	@RequestMapping(value = "/student/student.html")
     public String student(ModelMap models, HttpSession session)
@@ -61,6 +74,7 @@ public class StudentController {
 		if(user.getStudentsInfo() != null)
 		{
 			studentInfo = stdDao.getStudentByID(user.getStudentsInfo().getId());
+			session.setAttribute("studentID", studentInfo.getId());
 			models.put("studentInfo",studentInfo);
 		}
 		if(studentInfo == null)
@@ -153,6 +167,7 @@ public class StudentController {
 			student.setDob(date);
 			student.setGender(gender);
 			student.setInternationalStudent(studentType);
+			//student.setEducationalBackground(new ArrayList<EducationalBackground>());
 			List<Applications> applications = new ArrayList<Applications>();
 			applications.add(application);
 			student.setApplications( applications );
@@ -169,24 +184,96 @@ public class StudentController {
 		
 	}
 	
-	@RequestMapping(value = "/student/EducationalBackground.html")
+	@RequestMapping(value = "/student/EducationalBackground.html",method = RequestMethod.GET)
     public String addEducationalBackground(ModelMap models, HttpSession session,HttpServletRequest request)
     {
-		int departmentID = (int) session.getAttribute("studentID");
-		int studentID = (int) session.getAttribute("departmentID");
+		int studentID = (int) session.getAttribute("studentID");
+		int departmentID = (int) session.getAttribute("departmentID");
 		models.put("educationBackground", new EducationalBackground());
-		models.put("studentID", studentID);
-		models.put("departmentID", departmentID);
+		session.setAttribute("studentID", studentID);
+		session.setAttribute("departmentID", departmentID);
 		return "/student/EducationalBackground";
     }
 	
 	@RequestMapping(value = "/student/EducationalBackground.html", method = RequestMethod.POST)
     public String newEducationalBackground(@ModelAttribute EducationalBackground edu,ModelMap models, HttpSession session,HttpServletRequest request)
     {
-		int departmentID = Integer.parseInt(request.getParameter("studentID"));
-		int studentID = Integer.parseInt(request.getParameter("departmentID"));
-		String collegeName = request.getParameter("collegeName");
+		int studentID = (int) session.getAttribute("studentID");
+		EducationalBackground educationalBackground = eduDao.saveEducationalBackGround(edu);
+		
+		educationalBackground=eduDao.getEducationalBackGroundByID(educationalBackground.getId());
+		StudentInformation studentInfo = stdDao.getStudentByID(studentID);
+		
+		List<EducationalBackground> educationalBackgrounds = new ArrayList<EducationalBackground>();
+		EducationalBackground test = eduDao.getCountByStudentID(studentID);
+
+		if(test != null)
+		{
+			educationalBackgrounds = studentInfo.getEducationalBackground();
+		}
+		
+		educationalBackgrounds.add(educationalBackground);
+		studentInfo.setEducationalBackground(educationalBackgrounds);
+		studentInfo = stdDao.addStudent(studentInfo);
+		
+		educationalBackground.setStudentInfo(studentInfo);
+		educationalBackground = eduDao.saveEducationalBackGround(educationalBackground);
+		
+		models.put("educationalBackgrounds", educationalBackgrounds);
+		
 		return "/student/EducationalBackground";
+    }
+	
+	@RequestMapping(value = "/student/AcademicRecord.html",method = RequestMethod.GET)
+    public String addAcademicRecord(ModelMap models, HttpSession session,HttpServletRequest request)
+    {
+		int studentID = (int) session.getAttribute("studentID");
+		AcademicRecord academicRecord = null;
+		StudentInformation student = stdDao.getStudentByID(studentID);
+		if(student.getAcademics() != null)
+		{
+			academicRecord = student.getAcademics();
+		}
+		models.put("academicRecord", academicRecord);
+		return "/student/AcademicRecord";
+    }
+	
+	@RequestMapping(value = "/student/AcademicRecord.html",method = RequestMethod.POST)
+    public String addAcademicRecord(@RequestParam MultipartFile transcript, ModelMap models, HttpSession session,HttpServletRequest request) throws IOException
+    {
+		//initialize all fields required
+		int studentID = (int) session.getAttribute("studentID");
+		String filename = transcript.getOriginalFilename();
+		double greScore =Double.parseDouble(request.getParameter("greScore"));
+		double toeflScore =Double.parseDouble(request.getParameter("toeflScore"));
+		double gpa =Double.parseDouble(request.getParameter("gpa"));
+		AcademicRecord academicRecord = new AcademicRecord();
+		StudentInformation student = stdDao.getStudentByID(studentID);
+		
+		if(student.getAcademics() != null)
+		{
+			academicRecord = student.getAcademics();
+		}
+		
+		//adding data to academic record
+		academicRecord.setToeflScore(toeflScore);
+		academicRecord.setGreScore(greScore);
+		academicRecord.setGpa(gpa);
+		academicRecord.setTranscript(filename);
+		academicRecord = academicDao.addAcademicRecord(academicRecord);
+		
+		//add to above record to student information
+		student.setAcademics(academicRecord);
+		student = stdDao.addStudent(student);
+		
+		//uploading file
+		ServletContext context = session.getServletContext();
+		String path = context.getRealPath("/WEB-INF/files");
+		transcript.transferTo(new File ( new File(path), transcript.getOriginalFilename()));
+		
+		//setting return values, academic record
+		models.put("academicRecord", academicRecord);
+		return "/student/AcademicRecord";
     }
 	
 }

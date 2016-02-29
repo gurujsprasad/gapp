@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
   <title>Student Information</title>
   <meta charset="utf-8">
@@ -43,7 +44,7 @@
   
  
     <div class="panel panel-default">
-      <div class="panel-heading"> Student Information</div>
+      <div class="panel-heading"> Course and Student Information</div>
       <div class="panel-body">
 	      <form action = "StudentInformation.html" method = "post" role="form"  class="form-horizontal">
 	      	<c:if test="${studentInfo != null }">
@@ -115,7 +116,7 @@
 			<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">Date Of Birth</label>
 			    <div class="col-sm-3">
-			  	  <input type = "date" name = "dob" id = "dob" class="form-control" required <c:if test="${studentInfo != null }">value='${studentInfo.dob }'</c:if>>
+			  	  <input type = "date" name = "dob" id = "dob" class="form-control" required <c:if test="${studentInfo != null }">value='<fmt:formatDate pattern="yyyy-MM-dd" value="${studentInfo.dob}" />'</c:if>>
 			  	 </div>
 			</div>
 			<div class="form-group">

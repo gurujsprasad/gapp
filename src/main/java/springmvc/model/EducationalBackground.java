@@ -2,6 +2,8 @@ package springmvc.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Entity
@@ -17,9 +19,11 @@ public class EducationalBackground implements Serializable{
 	@Column(name = "college_name")
 	private String collegeName;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "start_year")
 	private Date startYear;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "end_year")
 	private Date endYear;
 	
@@ -28,10 +32,10 @@ public class EducationalBackground implements Serializable{
 	private String major;
 
 	//one student can have multiple college information.
-	/*@ManyToOne(cascade = CascadeType.ALL)
-	private StudentInformation studentInfo;*/
+	@ManyToOne
+	private StudentInformation studentInfo;
 	
-	/*
+	
 
 	public StudentInformation getStudentInfo() {
 		return studentInfo;
@@ -39,7 +43,7 @@ public class EducationalBackground implements Serializable{
 
 	public void setStudentInfo(StudentInformation studentInfo) {
 		this.studentInfo = studentInfo;
-	}*/
+	}
 
 	public int getId() {
 		return id;

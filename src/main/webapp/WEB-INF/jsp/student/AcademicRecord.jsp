@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<head>
+  <title>Academic Record</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+    
+</head>
+<body>
+
+<div class="container">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="admin.html">Graduate Application Program</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="student.html">Home</a></li>
+      <li><a href="../logout.html">Logout</a></li>
+      <li><a href="#"></a></li>
+    </ul>
+  </div>
+</nav>
+    <div class="panel panel-default">
+      <div class="panel-heading"> Academic Record</div>
+      <div class="panel-body">
+      <c:if test="${academicRecord != null }">
+      	<div class="alert alert-success">
+			<c:out value="${academicRecord.transcript }, trascript has been uploaded. You can replace with new file if required !! "></c:out>
+		</div>
+      </c:if>
+	      <form role="form"  class="form-horizontal" action = "AcademicRecord.html" method = "post" enctype="multipart/form-data">
+			      	<div class="form-group">
+			      	<label for="text"  class="control-label col-sm-2">GRE</label>
+					    <div class="col-sm-3">
+					    
+					  	  <input  name="greScore" type="text" class="form-control" id="greScore" placeholder="GRE Score" <c:if test="${academicRecord != null }">value='${academicRecord.greScore }'</c:if> required/>
+					  	 </div>
+					  </div>
+					  <div class="form-group">
+					  <label for="text"  class="control-label col-sm-2">TOEFL</label>
+					    <div class="col-sm-3">
+					  	  <input type="text" class="form-control" id="toeflScore" name="toeflScore" placeholder="Toefl Score" <c:if test="${academicRecord != null }">value='${academicRecord.toeflScore }'</c:if> required/>
+					  	 </div>
+					  </div>
+					<div class="form-group">
+					<label for="text"  class="control-label col-sm-2">GPA</label>
+					    <div class="col-sm-3">
+					  	  <input type="text" class="form-control" id="gpa" name="gpa" placeholder="GPA" required <c:if test="${academicRecord != null }">value='${academicRecord.gpa }'</c:if>/>
+					  	 </div>
+					  </div>
+					  <div class="form-group">
+					  <label for="text"  class="control-label col-sm-2">Transcript</label>
+					    <div class="col-sm-3">
+					  	  <input type="file" class="form-control" id="transcript" name="transcript" required />
+					  	 </div>
+					  </div>				
+					  <div class="form-group">        
+			     		<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-danger"  name="function" value = "college">Add Academic Record</button>
+					  </div>
+				</div>
+				</form>
+				<hr>
+				<a href = "AdditionalDetails.html"><button type="button" class="btn btn-danger"  name="function" value = "done">Save & Continue</button></a>
+	  </div>
+    </div>
+</div>
+<footer class="footer">
+      <div class="container">
+        <p class="text-muted">California State University, Los Angeles. Graduate application program</p>
+      </div>
+</footer>
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
   <title>Educational Background</title>
   <meta charset="utf-8">
@@ -30,43 +31,66 @@
     <div class="panel panel-default">
       <div class="panel-heading"> Educational Background</div>
       <div class="panel-body">
-	      <form:form role="form"  class="form-inline" action = "newEducationalBackground.html" modelAttribute="educationBackground" method = "post">
-	      		<input type = "hidden" name = "departmentID" value ="${departmentID }"/>
-	      		<input type = "hidden" name = "studentID" value ="${studentID }"/>
-	      		
+      <c:if test="${educationalBackgrounds != null  }">
+					<table class="table table-hover">
+						 <thead>
+					      <tr>
+					        <th>CollegeName</th>
+					        <th>StartYear</th>
+					        <th>EndYear</th>
+					        <th>Degree</th>
+					        <th>Major</th>
+					      </tr>
+					    </thead>
+		    			<tbody>
+		    			<c:forEach items="${educationalBackgrounds}" var="educationalBackground">
+		    				<tr>
+		    					<td>${educationalBackground.collegeName }</td>
+		    					<td><fmt:formatDate pattern="M/d/yyyy" value="${educationalBackground.startYear }" /></td>
+		    					<td><fmt:formatDate pattern="M/d/yyyy" value="${educationalBackground.endYear }" /></td>
+		    					<td>${educationalBackground.degree }</td>
+		    					<td>${educationalBackground.major }</td>
+		    				</tr>
+		    			</c:forEach>
+		    			</tbody>
+					</table>
+				</c:if>
+	      <form:form role="form"  class="form-inline" action = "EducationalBackground.html" modelAttribute="educationBackground" method = "post">
 			      	<div class="form-group">
 					    <div class="col-sm-3">
-					  	  <input type="text" class="form-control" id="collegeName" name = "collegeName" placeholder="College Name" required>
+					  	  <input  name="collegeName" type="text" class="form-control" id="collegeName" placeholder="College Name" required/>
 					  	 </div>
 					  </div>
 					  <div class="form-group">
 					  <label for="text"  class="control-label col-sm-2">Start Year</label>
 					    <div class="col-sm-3">
-					  	  <input type="date" class="form-control" id="startYear" name = "startYear" placeholder="Start Year" required>
+					  	  <input type="date" class="form-control" id="startYear" name="startYear" placeholder="Start Year" required/>
 					  	 </div>
 					  </div>
 					<div class="form-group">
 					<label for="text"  class="control-label col-sm-2">End Year</label>
 					    <div class="col-sm-3">
-					  	  <input type="date" class="form-control" id="endYear" name = "endYear" placeholder="End Year" required>
+					  	  <input type="date" class="form-control" id="endYear" name="endYear" placeholder="End Year" required />
 					  	 </div>
 					  </div>
 					  <div class="form-group">
 					    <div class="col-sm-3">
-					  	  <input type="text" class="form-control" id="major" name = "degree" placeholder="degree" required>
+					  	  <input type="text" class="form-control" id="major" name="degree" placeholder="degree" required />
 					  	 </div>
 					  </div>
 					<div class="form-group">
 					    <div class="col-sm-3">
-					  	  <input type="text" class="form-control" id="major" name = "major" placeholder="Major" required>
+					  	  <input type="text" class="form-control" id="major" name="major" placeholder="Major"  required/>
 					  	 </div>
 					  </div>					
 					  <div class="form-group">        
 			     		<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-danger"  name="function" value = "college"	>Add College</button>
+							<button type="submit" class="btn btn-danger"  name="function" value = "college">Add College</button>
 					  </div>
 				</div>
 				</form:form>
+				<hr>
+				<a href = "AcademicRecord.html"><button type="button" class="btn btn-danger"  name="function" value = "done">Save & Continue</button></a>
 	  </div>
     </div>
 </div>
