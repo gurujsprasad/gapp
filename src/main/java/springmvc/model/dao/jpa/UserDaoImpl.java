@@ -53,4 +53,12 @@ public class UserDaoImpl implements UserDao {
 		
 	}
 
+	@Transactional
+	@Override
+	public Users addStudent(StudentInformation student,int userID) {
+		
+		 entityManager.createQuery("update Users set studentsInfo = "+student+" where id = "+userID, Users.class).executeUpdate();
+		 return getUser(userID);
+	}
+
 }

@@ -61,6 +61,7 @@ public class UserController {
         	user.setEmail(email);
         	user.setPassword(password);
         	user.setRole(role);
+        	user.setStudentsInfo(null);
         	
         	user = userDao.saveUSer(user);
         	

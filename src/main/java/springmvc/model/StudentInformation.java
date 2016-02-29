@@ -1,6 +1,7 @@
 package springmvc.model;
 
 import java.util.Date;
+import java.util.List;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -38,15 +39,43 @@ public class StudentInformation implements Serializable{
 	private int internationalStudent; //0 for no, 1 for yes
 	
 	//////////////////////////////////////////////////////////
-	@OneToOne (targetEntity = Users.class,cascade = CascadeType.ALL)
-	private Users user;
+	/*@OneToOne (targetEntity = Users.class,cascade = CascadeType.ALL)
+	private Users user;*/
 	
-	/*
-	@OneToMany
-	private List <EducationalBackground> educationalBackground;*/
 	
-	/*@OneToMany
-	private List <Applications> applications;*/
+	@OneToMany(targetEntity = EducationalBackground.class)
+	private List <EducationalBackground> educationalBackground;
+	
+	@OneToMany(targetEntity = Applications.class)
+	private List <Applications> applications;
+	
+	@OneToOne(targetEntity = AcademicRecord.class)
+	private AcademicRecord academics;
+	
+	public AcademicRecord getAcademics() {
+		return academics;
+	}
+
+	public void setAcademics(AcademicRecord academics) {
+		this.academics = academics;
+	}
+	
+	public List<EducationalBackground> getEducationalBackground() {
+		return educationalBackground;
+	}
+
+	public void setEducationalBackground(List<EducationalBackground> educationalBackground) {
+		this.educationalBackground = educationalBackground;
+	}
+
+	public List<Applications> getApplications() {
+		return applications;
+	}
+
+	public void setApplications(List<Applications> applications) {
+		this.applications = applications;
+	}
+
 	//////////////////////////////////////////////////////////
 	public int getId() {
 		return id;
@@ -112,6 +141,8 @@ public class StudentInformation implements Serializable{
 		this.dob = dob;
 	}
 
+	
+
 	public String getCitizenship() {
 		return Citizenship;
 	}
@@ -144,13 +175,13 @@ public class StudentInformation implements Serializable{
 		this.applications = applications;
 	}*/
 
-	public Users getUser() {
+	/*public Users getUser() {
 		return user;
 	}
 
 	public void setUser(Users user) {
 		this.user = user;
-	}
+	}*/
 	
 	
 }

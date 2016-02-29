@@ -25,14 +25,14 @@ public class ApplicationStatusUpdate implements Serializable{
 	@ManyToOne(targetEntity = Users.class)
 	private Users user;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Applications application;
+	/*@ManyToOne //(targetEntity = Applications.class)
+	private Applications application;*/
 	
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) {	
 		this.id = id;
 	}
 

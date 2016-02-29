@@ -43,9 +43,10 @@ create table academic_record (
 
     create table applications (
         id  serial not null,
+        current_status varchar(255),
         term varchar(255),
+        academics_id int4,
         program_id int4,
-        studentInfomration_id int4,
         primary key (id)
     );
 
@@ -259,14 +260,18 @@ INSERT INTO public.application_status(
 INSERT INTO public.application_status(
            id,statusname)
     VALUES (5,'Recommend Admit with Condition');
+    
+INSERT INTO public.application_status(
+           id,statusname)
+    VALUES (6,'Saved');
 	
 
 -- student_information
 INSERT INTO public.student_information(id,
             citizenship, cin, dob, email, first_name, gender, international_student, 
-            last_name, phone_number, user_id)
+            last_name, phone_number)
     VALUES (1,'Indian', '305049906', '1990/05/24', 'student1@localhost.localdomain', 'ram', 'male', 1, 
-            'student1', '3236211872', 4);
+            'student1', '3236211872');
 
 --update users table
 UPDATE public.users

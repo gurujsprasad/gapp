@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import springmvc.model.*;
 import springmvc.model.dao.*;
@@ -30,6 +31,14 @@ public class ApplicationDaoImpl implements ApplicationDao{
 		return entityManager.createQuery("select a from Applications a"
 				+ " where a.studentInfomration.email = '"+studentEmail+"')",Applications.class ).getResultList();
 		
+	}
+
+
+	@Transactional
+	@Override
+	public Applications saveApplication(Applications application) {
+		// TODO Auto-generated method stub
+		return entityManager.merge(application);
 	}
 	
 

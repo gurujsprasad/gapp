@@ -8,6 +8,8 @@ public interface ApplicationDao {
 	List<Applications> getApplicationsPerDepartment(String department);
 	
 	List<Applications> getApplicationsForStudent(String studentEmail);
+
+	Applications saveApplication(Applications application);
 	
 	
 }

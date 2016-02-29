@@ -16,4 +16,6 @@ public interface UserDao {
     
     Users userLogin (String email, String password);
 
+	Users addStudent(StudentInformation student, int userID);
+
 }

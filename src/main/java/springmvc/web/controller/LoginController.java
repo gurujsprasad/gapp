@@ -13,7 +13,6 @@ import springmvc.model.dao.UserDao;
 
 @Controller
 public class LoginController {
-
 	
 	@Autowired
     private UserDao userDao;
@@ -29,12 +28,6 @@ public class LoginController {
     {
         return "/staff/staff";
     }
-	
-	@RequestMapping(value = "/student/student.html")
-    public String student()
-    {
-        return "/student/student";
-    }
 
     @RequestMapping(value = "/home.html", method = RequestMethod.POST)
     public String login(@RequestParam String email, @RequestParam String password, HttpServletRequest request)
@@ -46,7 +39,6 @@ public class LoginController {
     	if(user != null)
     	{
     		request.getSession().setAttribute("user", user);
-           // modelAndView.addObject("user", user);
     		if(user.getRole().getRole().equalsIgnoreCase(UserRoles.admin.toString()))
         	{
         		returnURL = "/admin/admin.html";
@@ -59,17 +51,12 @@ public class LoginController {
         	{
         		returnURL = "/student/student.html";
         	}
-    		//modelAndView.setViewName("redirect:"+returnURL);
-    		
-        	
     	}
     	else
     	{
     		message = "Email and password doesn't match";
     		request.getSession().setAttribute("message", message);
     		returnURL = "home.html";
-    		//models.put("message", message);
-    		//modelAndView.setViewName("redirect:"+returnURL);
     	}
     	return "redirect:"+returnURL;
     	

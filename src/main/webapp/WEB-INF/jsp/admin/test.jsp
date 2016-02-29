@@ -6,9 +6,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
+<title>Test File</title>
 </head>
 <body>
-<c:out value="${departmentID }"></c:out>
+
+<form action="upload.html"
+	method="post"
+	enctype="multipart/form-data">
+
+    First file: <input type="file" name="file" /> <br />
+   
+
+    <input type="submit" name="upload" value="Upload" />
+
+</form>
+<a href = "download.html">Download</a>
 </body>
 </html>

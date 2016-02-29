@@ -25,7 +25,7 @@ public class AcademicRecord  implements Serializable{
 	
 	String transcript;
 
-	
+	/*
 	@OneToOne(cascade = CascadeType.ALL)
 	private Applications applciation;
 	
@@ -35,7 +35,7 @@ public class AcademicRecord  implements Serializable{
 
 	public void setApplciation(Applications applciation) {
 		this.applciation = applciation;
-	}
+	}*/
 	
 	public int getId() {
 		return id;

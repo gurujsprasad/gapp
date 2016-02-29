@@ -35,11 +35,50 @@
     <div class="panel panel-default">
       <div class="panel-heading"> Welcome, ${user.firstName } !!</div>
       <div class="panel-body">
-      	<div class="list-group">
-		  <a href="#" class="list-group-item">Site Upder Development</a>
-		  
-		</div>
-      </div>
+	      <c:if test="${message != '' and message != null }">
+	      	<p>You have no applications at this time, Click on  <a href = "NewApplication.html">Apply</a> to submit an application</p>
+	      </c:if>
+	      <c:if test="${studentInfo != null}">
+	      	<p>You have, <c:out value="${studentInfo.applications.size()}"></c:out> applications in processing</p>
+	      	<a href = "NewApplication.html"><button type="button" class="btn btn-danger">New Applications</button></a>
+	      		<table class="table table-hover">
+				    <thead>
+				      <tr>
+				        <th>Department</th>
+				        <th>Program</th>
+				        <th>term</th>
+				        <th>Status</th>
+				        <th>Submitted On</th>
+				        <th>Operation</th>
+				      </tr>
+				    </thead>
+		    		<tbody>
+		    		<c:forEach items="${studentInfo.applications}" var="application">
+		    			<tr>
+		    				<c:forEach items="${application.statusInfo}" var="statusInfo">
+			    			 	<c:if test="${statusInfo.status.statusName eq 'New'}">
+			    			 		<c:set value="${statusInfo.updatedTime}" var="date" ></c:set>
+			    			 	</c:if>
+			    			 </c:forEach>
+			    			 
+			    			 <td>${application.program.department.name}</td>
+			    			 <td>${application.program.programName }</td>
+			    			 <td>${application.term}</td>	
+			    			 <td>${application.currentStatus}</td>
+			    			 <td>${ date }</td>
+			    			 	
+			    			 <td>
+			    			 	<c:if test="${application.currentStatus eq 'Saved'}">
+			    			 		<a href= "#">EDIT</a>
+			    			 	</c:if>
+			    			 	<a href= "#">VIEW</a>
+			    			 </td>
+		    			</tr>
+		    		</c:forEach>
+		    		</tbody>
+		  	   </table>
+	      </c:if>
+	  </div>
     </div>
 </div>
 <footer class="footer">

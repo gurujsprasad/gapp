@@ -28,10 +28,10 @@ public class EducationalBackground implements Serializable{
 	private String major;
 
 	//one student can have multiple college information.
-	@ManyToOne(cascade = CascadeType.ALL)
-	private StudentInformation studentInfo;
+	/*@ManyToOne(cascade = CascadeType.ALL)
+	private StudentInformation studentInfo;*/
 	
-	
+	/*
 
 	public StudentInformation getStudentInfo() {
 		return studentInfo;
@@ -39,7 +39,7 @@ public class EducationalBackground implements Serializable{
 
 	public void setStudentInfo(StudentInformation studentInfo) {
 		this.studentInfo = studentInfo;
-	}
+	}*/
 
 	public int getId() {
 		return id;

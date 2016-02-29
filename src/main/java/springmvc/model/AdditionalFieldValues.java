@@ -17,11 +17,11 @@ public class AdditionalFieldValues implements Serializable{
 	
 	private String value;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = AdditionalFields.class)
 	private AdditionalFields additionalField;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Applications application;
+	/*@ManyToOne(cascade = CascadeType.ALL)
+	private Applications application;*/
 
 	public int getId() {
 		return id;
@@ -39,13 +39,13 @@ public class AdditionalFieldValues implements Serializable{
 		this.additionalField = additionalField;
 	}
 
-	public Applications getApplication() {
+	/*public Applications getApplication() {
 		return application;
 	}
 
 	public void setApplication(Applications application) {
 		this.application = application;
-	}
+	}*/
 
 	public String getValue() {
 		return value;
