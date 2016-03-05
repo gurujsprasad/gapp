@@ -177,100 +177,100 @@ create table academic_record (
         references student_information;
 
    -- user_role
-INSERT INTO public.user_role(id,role)
-    VALUES (1,'admin');
+INSERT INTO public.user_role(role)
+    VALUES ('admin');
+
+INSERT INTO public.user_role(role)
+    VALUES ('staff');
 
 INSERT INTO public.user_role(id,role)
-    VALUES (2,'staff');
-
-INSERT INTO public.user_role(id,role)
-    VALUES (3,'student');
+    VALUES ('student');
 	
 	
 -- users table
 INSERT INTO public.users(
-            id,email_id, first_name, last_name, password, role_id)
-    VALUES (1,'admin@localhost.localdomain', 'jdoe', 'admin', 'abcd', 1);
+            email_id, first_name, last_name, password, role_id)
+    VALUES ('admin@localhost.localdomain', 'jdoe', 'admin', 'abcd', 1);
 
 INSERT INTO public.users(
-            id,email_id, first_name, last_name, password, role_id)
-    VALUES (2,'staff1@localhost.localdomain', 'john', 'staff1', 'abcd', 2);
-
-
-INSERT INTO public.users(
-            id,email_id, first_name, last_name, password, role_id)
-    VALUES (3,'staff2@localhost.localdomain', 'jack', 'staff2', 'abcd', 2);
+            email_id, first_name, last_name, password, role_id)
+    VALUES ('staff1@localhost.localdomain', 'john', 'staff1', 'abcd', 2);
 
 
 INSERT INTO public.users(
-            id,email_id, first_name, last_name, password, role_id)
-    VALUES (4,'student1@localhost.localdomain', 'ram', 'student1', 'abcd', 3);
+            email_id, first_name, last_name, password, role_id)
+    VALUES ('staff2@localhost.localdomain', 'jack', 'staff2', 'abcd', 2);
 
 
 INSERT INTO public.users(
-            id, email_id, first_name, last_name, password, role_id)
-    VALUES (5,'student2@localhost.localdomain', 'raj', 'stduent2', 'abcd', 3);
+            email_id, first_name, last_name, password, role_id)
+    VALUES ('student1@localhost.localdomain', 'ram', 'student1', 'abcd', 3);
+
+
+INSERT INTO public.users(
+             email_id, first_name, last_name, password, role_id)
+    VALUES ('student2@localhost.localdomain', 'raj', 'stduent2', 'abcd', 3);
 	
 
 -- departments table
 INSERT INTO public.departments(
-            id,name)
-    VALUES (1,'Accounting Department');
+            name)
+    VALUES ('Accounting Department');
 
 
 INSERT INTO public.departments(
-            id,name)
-    VALUES (2,'Computer Science Department');
+            name)
+    VALUES ('Computer Science Department');
 	
 -- programs
 INSERT INTO public.programs(
-            id,program_name, department_id)
-    VALUES (1,'MS in Accounting program', 1);
+            program_name, department_id)
+    VALUES ('MS in Accounting program', 1);
 
 
 INSERT INTO public.programs(
-            id,program_name, department_id)
-    VALUES (2,'MS in Computer Science program', 2);
+            program_name, department_id)
+    VALUES ('MS in Computer Science program', 2);
 
 -- additionalField 
 INSERT INTO public.additional_fields(
-            id,field_type, name_of_field, required_optional, department_id)
-    VALUES (1,'text', 'GMAT', 'required', 1);
+            field_type, name_of_field, required_optional, department_id)
+    VALUES ('text', 'GMAT', 'required', 1);
 	
 	
 -- application_status
 INSERT INTO public.application_status(
-            id,statusname)
-    VALUES (1,'New');
+            statusname)
+    VALUES ('New');
 
 INSERT INTO public.application_status(
-            id,statusname)
-    VALUES (2,'Pending ');
+            statusname)
+    VALUES ('Pending ');
 
 INSERT INTO public.application_status(
-            id,statusname)
-    VALUES (3,'Denied ');
-
-
-INSERT INTO public.application_status(
-            id,statusname)
-    VALUES (4,'Recommend Admit ');
+            statusname)
+    VALUES ('Denied ');
 
 
 INSERT INTO public.application_status(
-           id,statusname)
-    VALUES (5,'Recommend Admit with Condition');
+            statusname)
+    VALUES ('Recommend Admit ');
+
+
+INSERT INTO public.application_status(
+           statusname)
+    VALUES ('Recommend Admit with Condition');
     
 INSERT INTO public.application_status(
-           id,statusname)
-    VALUES (6,'Saved');
+           statusname)
+    VALUES ('Saved');
 	
 
 -- student_information
-INSERT INTO public.student_information(id,
+INSERT INTO public.student_information(
             citizenship, cin, dob, email, first_name, gender, international_student, 
             last_name, phone_number)
-    VALUES (1,'Indian', '305049906', '1990/05/24', 'student1@localhost.localdomain', 'ram', 'male', 1, 
+    VALUES ('Indian', '305049906', '1990/05/24', 'student1@localhost.localdomain', 'ram', 'male', 1, 
             'student1', '3236211872');
 
 --update users table
