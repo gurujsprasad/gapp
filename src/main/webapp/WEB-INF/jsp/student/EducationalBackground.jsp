@@ -10,8 +10,6 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
-    
 </head>
 <body>
 
@@ -40,6 +38,8 @@
 					        <th>EndYear</th>
 					        <th>Degree</th>
 					        <th>Major</th>
+					        <th>Operation</th>
+					        
 					      </tr>
 					    </thead>
 		    			<tbody>
@@ -50,6 +50,8 @@
 		    					<td><fmt:formatDate pattern="M/d/yyyy" value="${educationalBackground.endYear }" /></td>
 		    					<td>${educationalBackground.degree }</td>
 		    					<td>${educationalBackground.major }</td>
+		    					<td><a href = "DeleteEducationalBackground/${educationalBackground.id }.html"><button type="button" class="btn btn-info"  name="function" value = "done">Delete</button></a></td>
+					       		
 		    				</tr>
 		    			</c:forEach>
 		    			</tbody>
@@ -85,7 +87,7 @@
 					  </div>					
 					  <div class="form-group">        
 			     		<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-danger"  name="function" value = "college">Add College</button>
+							<button type="submit" class="btn btn-info"  name="function" value = "college">Add College</button>
 					  </div>
 				</div>
 				</form:form>

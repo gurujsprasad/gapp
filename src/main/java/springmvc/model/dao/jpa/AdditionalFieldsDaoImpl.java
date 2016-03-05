@@ -19,8 +19,8 @@ public class AdditionalFieldsDaoImpl implements AdditionalFieldsDao{
 	@Override
 	public List<AdditionalFields> getAdditionalFielsByDptID(int dptID) {
 		
-		return entityManager.createQuery("from AdditionalFields where department.id ="+dptID,AdditionalFields.class).getResultList();
-		
+		List<AdditionalFields> additionalfields = entityManager.createQuery("from AdditionalFields where department.id ="+dptID,AdditionalFields.class).getResultList();
+		return additionalfields == null ? null : additionalfields;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
   <title>Student Home</title>
   <meta charset="utf-8">
@@ -36,11 +37,11 @@
       <div class="panel-heading"> Welcome, ${user.firstName } !!</div>
       <div class="panel-body">
 	      <c:if test="${message != '' and message != null }">
-	      	<p>You have no applications at this time, Click on  <a href = "NewApplication.html">Apply</a> to submit an application</p>
+	      	<p>You have no applications at this time, Click on  <a href = "StudentApplication.html">Apply</a> to submit an application</p>
 	      </c:if>
 	      <c:if test="${studentInfo != null}">
 	      	<p>You have, <c:out value="${studentInfo.applications.size()}"></c:out> applications in processing</p>
-	      	<a href = "NewApplication.html"><button type="button" class="btn btn-danger">New Applications</button></a>
+	      	<a href = "StudentApplication.html"><button type="button" class="btn btn-danger">New Application</button></a>
 	      		<table class="table table-hover">
 				    <thead>
 				      <tr>
@@ -65,13 +66,13 @@
 			    			 <td>${application.program.programName }</td>
 			    			 <td>${application.term}</td>	
 			    			 <td>${application.currentStatus}</td>
-			    			 <td>${ date }</td>
+			    			 <td><fmt:formatDate pattern="M/d/yyyy" value="${ date }" /></td>
 			    			 	
 			    			 <td>
 			    			 	<c:if test="${application.currentStatus eq 'Saved'}">
-			    			 		<a href= "#">EDIT</a>
+			    			 		<a href= "StudentEditApplication/${application.id }.html">EDIT</a>
 			    			 	</c:if>
-			    			 	<a href= "#">VIEW</a>
+			    			 	<a href= "StudentViewApplication/${application.id }.html">VIEW</a>
 			    			 </td>
 		    			</tr>
 		    		</c:forEach>

@@ -17,6 +17,12 @@ public class ApplicationDaoImpl implements ApplicationDao{
     private EntityManager entityManager;
 	
 	@Override
+	public Applications getApplicationByID(int id)
+	{
+		return entityManager.find(Applications.class, id);
+	}
+	
+	@Override
 	public List<Applications> getApplicationsPerDepartment(String department) {
 		
 		return entityManager.createQuery("select a from Applications a"

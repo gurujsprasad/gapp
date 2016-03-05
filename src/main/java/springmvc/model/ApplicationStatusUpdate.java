@@ -28,6 +28,14 @@ public class ApplicationStatusUpdate implements Serializable{
 	/*@ManyToOne //(targetEntity = Applications.class)
 	private Applications application;*/
 	
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
 	public int getId() {
 		return id;
 	}

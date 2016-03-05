@@ -10,6 +10,8 @@ public interface ApplicationDao {
 	List<Applications> getApplicationsForStudent(String studentEmail);
 
 	Applications saveApplication(Applications application);
+
+	Applications getApplicationByID(int id);
 	
 	
 }

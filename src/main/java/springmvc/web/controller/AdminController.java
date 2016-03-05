@@ -3,6 +3,7 @@ package springmvc.web.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,14 @@ public class AdminController {
 	private AdditionalFieldsDao addFieldsDao;
 	
 	@RequestMapping(value = "admin/listdepartment.html")
-    public String viewDepartment(ModelMap models)
+    public String viewDepartment(ModelMap models,HttpSession session)
     {
+		if(session.getAttribute("user")==null)
+		{
+			String message = "Session timed out, please login again to continue !!";
+			session.setAttribute("message", message);
+			return "redirect:../home.html";
+		}
 		List<Departments> departments = dptDao.getDepartments();
 		List<Programs> programs = pgrDao.getPrograms();
 		
@@ -128,11 +135,19 @@ public class AdminController {
 	
 	//this is for removing the department completely with all programs and additional fields in it
 	@RequestMapping(value = "admin/deletedepartment/{id}.html")
-	public String deleteDepartment(@PathVariable Integer id, ModelMap models)
+	public String deleteDepartment(@PathVariable Integer id, ModelMap models, HttpSession session)
 	{
-		addFieldsDao.removeAdditionalFieldsByDptID(id);
-		pgrDao.deletePrograms(id);
-		dptDao.deleteDepartment(id);
+		try
+		{
+			addFieldsDao.removeAdditionalFieldsByDptID(id);
+			pgrDao.deletePrograms(id);
+			dptDao.deleteDepartment(id);
+		}
+		catch(Exception e)
+		{
+			String message = "You cannot delete the department, as there are applications depending on it. This would be covered in the next Assginment !!";
+			session.setAttribute("dptmessage",message);
+		}
 		return "redirect:../listdepartment.html";
 		
 	}
@@ -167,11 +182,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "admin/deleteprogram.html")
-	public String deleteProgram(HttpServletRequest request, ModelMap models)
+	public String deleteProgram(HttpServletRequest request, ModelMap models, HttpSession session)
 	{
 		int id = Integer.parseInt(request.getParameter("id"));
 		int dID = Integer.parseInt(request.getParameter("dID"));
-		pgrDao.deleteProgramByID(id);
+		try{
+			pgrDao.deleteProgramByID(id);
+		}
+		catch(Exception e)
+		{
+			String message = "You cannot delete the program, as there are applications depending on it. This would be covered in the next Assginment !!";
+			session.setAttribute("message",message);
+		}
+		
 		return "redirect:editdepartment/"+dID+".html";
 		
 	}
@@ -240,11 +263,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "admin/deletefield.html")
-	public String deleteField(HttpServletRequest request, ModelMap models)
+	public String deleteField(HttpServletRequest request, ModelMap models, HttpSession session)
 	{
 		int id = Integer.parseInt(request.getParameter("id"));
 		int dID = Integer.parseInt(request.getParameter("dID"));
-		addFieldsDao.deleteFieldByID(id);
+		try
+		{
+			addFieldsDao.deleteFieldByID(id);
+		}
+		catch(Exception e)
+		{
+			String message = "You cannot delete the field, as there are applications depending on it. This would be covered in the next Assginment !!";
+			session.setAttribute("afmessage",message);
+		}
 		return "redirect:editdepartment/"+dID+".html";
 		
 	}

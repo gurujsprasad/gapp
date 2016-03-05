@@ -35,8 +35,8 @@
       <a class="navbar-brand" href="admin.html">Graduate Application Program</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="student.html">Home</a></li>
-      <li><a href="../logout.html">Logout</a></li>
+      <li class="active"><a href="<c:if test = "${application != null }">../</c:if>student.html">Home</a></li>
+      <li><a href="<c:if test = "${application != null }">../</c:if>../logout.html">Logout</a></li>
       <li><a href="#"></a></li>
     </ul>
   </div>
@@ -46,7 +46,7 @@
     <div class="panel panel-default">
       <div class="panel-heading"> Course and Student Information</div>
       <div class="panel-body">
-	      <form action = "StudentInformation.html" method = "post" role="form"  class="form-horizontal">
+	      <form action = "<c:if test = "${application != null }">../</c:if>StudentInformation.html" method = "post" role="form"  class="form-horizontal">
 	      	<c:if test="${studentInfo != null }">
 	      		<input type = "hidden" value = "studentExist" name = "checkStudent"/>
 	      		<input type = "hidden" value = "${studentInfo.id}" name = "studentID"/>
@@ -54,38 +54,65 @@
 	      	<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">Department</label>
 			    <div class="col-sm-3">
-			  	  <select id = "department" name = "department" class="form-control" required>
-		      		<option></option>
-		      		<c:forEach items="${departments }" var="department" >
-		      			<option value="${department.id }">${department.name}</option>
-		      		</c:forEach>
-		      	  </select>
+			    <c:choose>
+			     <c:when test="${application != null }">
+			     	<input type = "hidden" id = "department" name = "department" value = "${application.program.department.id}"/>
+			     	<c:out value="${application.program.department.name }"></c:out>
+			     </c:when>
+			     <c:otherwise>
+				     <select id = "department" name = "department" class="form-control" required>
+			      		<option></option>
+			      		<c:forEach items="${departments }" var="department" >
+			      			<option value="${department.id }">${department.name}</option>
+			      		</c:forEach>
+			      	 </select>
+			     </c:otherwise>
+			    </c:choose>
+			  	  
 			  	 </div>
 			</div>
 			<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">Program</label>
 			    <div class="col-sm-3">
-			  	  <select id = "program" name = "program" class="form-control" required></select>
+			     <c:choose>
+			     <c:when test="${application != null }">
+			     	<select id = "program" name = "program" class="form-control" required>
+			     		<c:forEach items="${programs }" var="program">
+			     			<option value = "${program.id }" <c:if test="${application.program.id == program.id }">selected</c:if> >${program.programName }</option>
+			     		</c:forEach>
+			     	</select>
+			     </c:when>
+			     <c:otherwise>
+				     <select id = "program" name = "program" class="form-control" required></select>
+			     </c:otherwise>
+			    </c:choose>
+			  	  
 			  	 </div>
 			</div>
 			<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">Term</label>
 			    <div class="col-sm-3">
-			  	  <input type = "text" name = "term" id = "term" class="form-control" required>
+				    <c:choose>
+				     <c:when test="${application != null }">
+				     	<input type = "text" name = "term" value = "${application.term }" id = "term" class="form-control" required>
+				     </c:when>
+				     <c:otherwise>
+					     <input type = "text" name = "term" id = "term" class="form-control" required>
+				     </c:otherwise>
+				    </c:choose>
 			  	 </div>
 			</div>
 			<hr/>
 			<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">First Name</label>
 			    <div class="col-sm-3">
-			      <c:if test="${studentInfo != null }"></c:if>
-			  	  <input type = "text" name = "firstName" id = "firstName" class="form-control" required <c:if test="${studentInfo != null }">value='${studentInfo.firstName }'</c:if>>
+			  	  <input type = "text" name = "firstName" id = "firstName" class="form-control" required <c:if test="${firstTime == 0 }">value='${user.firstName }'</c:if> <c:if test="${studentInfo != null and firstTime != 0}">value='${studentInfo.firstName }'</c:if>>
 			  	 </div>
 			</div>
 			<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">Last Name</label>
 			    <div class="col-sm-3">
-			  	  <input type = "text" name = "lastName" id = "lastName" class="form-control" required <c:if test="${studentInfo != null }">value='${studentInfo.lastName }'</c:if>>
+			  	  <input type = "text" name = "lastName" id = "lastName" class="form-control" required <c:if test="${firstTime == 0 }">value='${user.lastName }'</c:if><c:if test="${studentInfo != null  and firstTime != 0}">value='${studentInfo.lastName }'</c:if>>
 			  	 </div>
 			</div>
 			<div class="form-group">
@@ -103,7 +130,7 @@
 			<div class="form-group">
 			    <label for="text"  class="control-label col-sm-2">Email</label>
 			    <div class="col-sm-3">
-			  	  <input type = "text" name = "email" id = "email" class="form-control" required <c:if test="${studentInfo != null }">value='${studentInfo.email }'</c:if>>
+			  	  <input type = "text" name = "email" id = "email" class="form-control" required <c:if test="${firstTime == 0 }">value='${user.email }'</c:if> <c:if test="${studentInfo != null  and firstTime != 0}">value='${studentInfo.email }'</c:if>>
 			  	 </div>
 			</div>
 			<div class="form-group">

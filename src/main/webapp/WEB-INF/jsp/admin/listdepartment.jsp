@@ -34,6 +34,12 @@
 		 </ul>
 	  </div>
       <div class="panel-body">
+      <c:if test="${dptmessage != null and dptmessage != ' ' }">
+	      	<div class="alert alert-danger">
+  				<c:out value="${dptmessage }"></c:out>
+  				<c:set var="dptmessage" value=" " scope="session"></c:set>
+			</div>
+	      </c:if>
       	<table class="table table-hover">
 		    <thead>
 		      <tr>

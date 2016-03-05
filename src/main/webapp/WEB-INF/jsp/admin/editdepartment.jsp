@@ -47,6 +47,12 @@
       	<div class="panel panel-primary">
      		<div class="panel-heading">Department</div>
       		<div class="panel-body">
+      		<c:if test="${dptmessage != null and dptmessage != ' ' }">
+	      	<div class="alert alert-danger">
+  				<c:out value="${dptmessage }"></c:out>
+  				<c:set var="dptmessage" value=" " scope="session"></c:set>
+			</div>
+	      </c:if>
       			<form role="form"  class="form-inline" action = "../updatedepartment.html" method = "post">
 			      	<div class="form-group">
 					    <label for="text"  class="control-label col-sm-2"> Name</label>
@@ -68,6 +74,12 @@
       	<div class="panel panel-primary">
      		<div class="panel-heading">Programs</div>
 	      <div class="panel-body">
+	      <c:if test="${message != null and message != ' ' }">
+	      	<div class="alert alert-danger">
+  				<c:out value="${message }"></c:out>
+  				<c:set var="message" value=" " scope="session"></c:set>
+			</div>
+	      </c:if>
 	      <c:forEach items="${programs}" var="program">      
 	      	<form role="form"  class="form-inline" action = "../updateprogram.html" method = "post">	
 	      		<input type = "hidden" name = "departmentID" value ="${department.id}"/>
@@ -106,7 +118,12 @@
       	<div class="panel panel-primary">
      		<div class="panel-heading">Additional Fields</div>
 	      <div class="panel-body">
-	      
+	      <c:if test="${afmessage != null and afmessage != ' ' }">
+	      	<div class="alert alert-danger">
+  				<c:out value="${afmessage }"></c:out>
+  				<c:set var="afmessage" value=" " scope="session"></c:set>
+			</div>
+	      </c:if>
     	<c:forEach items="${fields}" var="fields">
 	      	<form role="form"  class="form-inline" action = "../updatefield.html" method = "post">
 	      			<input type = "hidden" name = "departmentID" value ="${department.id}"/>
