@@ -22,7 +22,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="admin.html">Graduate Application Program</a>
+      <a class="navbar-brand" href="student.html">Graduate Application Program</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="student.html">Home</a></li>
@@ -39,8 +39,8 @@
 	      <c:if test="${message != '' and message != null }">
 	      	<p>You have no applications at this time, Click on  <a href = "StudentApplication.html">Apply</a> to submit an application</p>
 	      </c:if>
-	      <c:if test="${studentInfo != null}">
-	      	<p>You have, <c:out value="${studentInfo.applications.size()}"></c:out> applications in processing</p>
+	      <c:if test="${studentInfo.size() > 0}">
+	      	<p>You have, <c:out value="${studentInfo.size()}"></c:out> applications in processing</p>
 	      	<a href = "StudentApplication.html"><button type="button" class="btn btn-danger">New Application</button></a>
 	      		<table class="table table-hover">
 				    <thead>
@@ -54,30 +54,30 @@
 				      </tr>
 				    </thead>
 		    		<tbody>
-		    		<c:forEach items="${studentInfo.applications}" var="application">
+		    		<c:forEach items="${studentInfo}" var="student">
 		    			<tr>
-		    				<c:forEach items="${application.statusInfo}" var="statusInfo">
+		    				<c:forEach items="${student.applications.statusInfo}" var="statusInfo">
 			    			 	<c:if test="${statusInfo.status.statusName eq 'New'}">
 			    			 		<c:set value="${statusInfo.updatedTime}" var="date" ></c:set>
 			    			 	</c:if>
 			    			 </c:forEach>
 			    			 
-			    			 <td>${application.program.department.name}</td>
-			    			 <td>${application.program.programName }</td>
-			    			 <td>${application.term}</td>	
-			    			 <td>${application.currentStatus}</td>
+			    			 <td>${student.applications.program.department.name}</td>
+			    			 <td>${student.applications.program.programName }</td>
+			    			 <td>${student.applications.term}</td>	
+			    			 <td>${student.applications.currentStatus}</td>
 			    			 <td><fmt:formatDate pattern="M/d/yyyy" value="${ date }" /></td>
 			    			 	
 			    			 <td>
-			    			 	<c:if test="${application.currentStatus eq 'Saved'}">
-			    			 		<a href= "StudentEditApplication/${application.id }.html">EDIT</a>
+			    			 	<c:if test="${student.applications.currentStatus eq 'Saved'}">
+			    			 		<a href= "StudentEditApplication/${student.id }.html">EDIT</a>
 			    			 	</c:if>
-			    			 	<a href= "StudentViewApplication/${application.id }.html">VIEW</a>
+			    			 	<a href= "StudentViewApplication/${student.id }.html">VIEW</a>
 			    			 </td>
 		    			</tr>
 		    		</c:forEach>
 		    		</tbody>
-		  	   </table>
+		  	   </table> 
 	      </c:if>
 	  </div>
     </div>
